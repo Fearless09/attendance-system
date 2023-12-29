@@ -1,3 +1,5 @@
+import { color } from "framer-motion"
+
 export const BackArrow = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -184,5 +186,17 @@ export const Close = ({ color, size }) => (
         className="cf-icon-svg"
     >
         <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
+    </svg>
+)
+
+export const Delete = ({size, color}) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill={color || "#000000"}
+        width={size || "24px"}
+        height={size || "24px"}
+        viewBox="0 0 24 24"
+    >
+        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
     </svg>
 )

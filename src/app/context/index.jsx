@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { attendanceCollection, courseCollection, database, usersCollection } from '../firebase/fireBaseConfig'
 import { NextUIProvider } from '@nextui-org/react'
+import { read, utils, writeFile, writeFileXLSX } from 'xlsx'
 
 export const AppContext = createContext('')
 
@@ -15,7 +16,7 @@ const lecturer = {
 }
 const student = {
     name: "Ajayi Toheeb Opeyemi",
-    userName: "IFT172408"
+    matricNumber: "IFT172408"
 }
 
 const courseNull = {
@@ -97,7 +98,7 @@ export default function AppContextProvider({ children }) {
         //         // console.log(response.docs.map((item) => item.data()))
         //     }).catch(error => toast.error(error.message))
         onSnapshot(attendanceCollection, (response) => {
-            setAttendance(response.docs.map((item) => ({ ...item.data(), id: item.id })))
+            setAttendance(response.docs.map((item, index) => ({ sn: (index + 1), ...item.data(), uuId: item.id })))
             // console.log(response.docs.map((item) => ({ ...item.data(), id: item.id })))
         })
     }
@@ -112,6 +113,14 @@ export default function AppContextProvider({ children }) {
         ))
     }
 
+    // Export Data
+    function OnExportAttendance() {
+        const wb = utils.book_new()
+        const ws = utils.json_to_sheet(attendance)
+        utils.book_append_sheet(wb, ws, "Sheet1")
+        writeFile(wb, (`${course?.courseCode.toUpperCase()} ${course?.courseTitle}.xlsx` || "Attendance.xlsx"))
+    }
+
     useEffect(() => {
         getCourse()
         getAttendance()
@@ -119,7 +128,7 @@ export default function AppContextProvider({ children }) {
     }, [])
 
     return (
-        <AppContext.Provider value={{ viewCourseDetailModal, setViewCourseDetailModal, lecturer, student, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, setUsers, addUsers }}>
+        <AppContext.Provider value={{ viewCourseDetailModal, setViewCourseDetailModal, lecturer, student, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, setUsers, addUsers, OnExportAttendance }}>
             <NextUIProvider>
                 {children}
             </NextUIProvider>

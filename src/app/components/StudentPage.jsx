@@ -18,7 +18,7 @@ export default function StudentPage() {
                 {student?.name}
             </h1>
             <h2 className='uppercase mt-4 font-medium text-xl text-white'>
-                {student?.userName}
+                {student?.matricNumber}
             </h2>
 
             {(course?.courseCode || course?.courseTitle) && (

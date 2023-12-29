@@ -3,12 +3,12 @@
 import React from 'react'
 import { useAppContext } from '../context'
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
-import { Close } from './SVGs'
+import { Close, Delete } from './SVGs'
 
-const columns = ["SN", "Name", "Matric. Number"];
+const columns = ["SN", "Name", "Matric. Number", ""];
 
 export default function AttendanceTable() {
-    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance } = useAppContext()
+    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance } = useAppContext()
 
     return viewAttendanceTable && (
         // Fade background
@@ -19,6 +19,7 @@ export default function AttendanceTable() {
                     <div className='flex items-center gap-5'>
                         <button
                             className='py-4 px-10 rounded-lg text-white capitalize text-base font-medium bg-gradient-to-t from-[#181717] to-[#1f1f1f] active:scale-[0.95]'
+                            onClick={() => OnExportAttendance()}
                         >
                             Export Attendance
                         </button>
@@ -50,11 +51,12 @@ export default function AttendanceTable() {
                             ))}
                         </TableHeader>
                         <TableBody emptyContent={(!attendance || attendance?.length < 1) && "No rows to display"}>
-                            {attendance?.map((item, index) => (
-                                <TableRow key={index + 1}>
-                                    <TableCell>{index + 1}</TableCell>
+                            {attendance?.map((item) => (
+                                <TableRow key={item.sn}>
+                                    <TableCell>{item.sn}</TableCell>
                                     <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.userName}</TableCell>
+                                    <TableCell>{item.matricNumber}</TableCell>
+                                    <TableCell><button className='text-red-600'><Delete color={"rgb(220 38 38)"} /></button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
