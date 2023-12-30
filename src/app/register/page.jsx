@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
 import Link from 'next/link'
 import { EyeHide, EyeShow, Loading } from '../components/SVGs'
 import { useAppContext } from '../context'
+import { toast } from 'react-toastify'
 
 const prefix = ["", "Mr.", "Mrs.", "Dr.", "Prof."]
 
@@ -12,18 +13,28 @@ function Page() {
     const [active, setActive] = useState('students')
     const [loading, setLoading] = useState(false)
     const [viewPassword, setViewPassword] = useState(false)
-    const { users, setUsers, addUsers } = useAppContext()
+    const { users, user, setUser, addUsers } = useAppContext()
+    const [errorState, setErrorState] = useState(false)
+    const passwordRef = useRef()
 
     const onsubmit = (e) => {
         e.preventDefault()
 
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 5000);
-
-        console.log(users)
+        if (users.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber?.toLowerCase())) {
+            toast.error("User Already Exist")
+            setErrorState(true)
+        } else {
+            setErrorState(false)
+            addUsers()
+        }
     }
+
+    useEffect(() => {
+        setUser(prev => ({
+            ...prev,
+            role: active
+        }))
+    }, [active])
     return (
         <AuthLayout text={'Sign Up'}>
             <div className='mt-[25px] grid grid-cols-2 gap-2 rounded-lg bg-[#D8DADC]'>
@@ -40,7 +51,7 @@ function Page() {
                     Lecturers
                 </button>
             </div>
-            <form className='mt-[25px]'>
+            <form onSubmit={onsubmit} className='mt-[25px]'>
                 {/* Email */}
                 <div className='grid gap-1'>
                     <label className='ps-1 text-[#181717] font-medium text-base' htmlFor="email">
@@ -51,7 +62,7 @@ function Page() {
                         id='email'
                         className='p-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base'
                         placeholder='Enter your email'
-                        onChange={e => setUsers(prev => ({
+                        onChange={e => setUser(prev => ({
                             ...prev,
                             [e.target.id]: e.target.value
                         }))}
@@ -68,7 +79,7 @@ function Page() {
                             name="prefix"
                             id="prefix"
                             className='p-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base'
-                            onChange={e => setUsers(prev => ({
+                            onChange={e => setUser(prev => ({
                                 ...prev,
                                 [e.target.id]: e.target.value
                             }))}
@@ -89,7 +100,7 @@ function Page() {
                         id='fullName'
                         className='p-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base'
                         placeholder='Enter your full name'
-                        onChange={e => setUsers(prev => ({
+                        onChange={e => setUser(prev => ({
                             ...prev,
                             [e.target.id]: e.target.value
                         }))}
@@ -107,15 +118,26 @@ function Page() {
                     </label>
                     <input
                         type="text"
-                        id='userID'
+                        id='matricNumber'
                         className='p-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base'
                         placeholder={`Enter your  ${active === 'students' ? 'matric number' : 'lecturer ID'}`}
-                        onChange={e => setUsers(prev => ({
+                        onChange={e => setUser(prev => ({
                             ...prev,
                             [e.target.id]: e.target.value
                         }))}
+                        onBlur={() => {
+                            if (users.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber?.toLowerCase())) {
+                                toast.error("User Already Exist")
+                                setErrorState(true)
+                            } else {
+                                setErrorState(false)
+                            }
+                        }}
                         required
                     />
+                    {errorState && (
+                        <p className='text-red-600 ps-1'>User exist, try different ID</p>
+                    )}
                 </div>
                 {/* Password */}
                 <div className='mt-4 grid gap-1'>
@@ -124,28 +146,30 @@ function Page() {
                     </label>
                     <div className='relative'>
                         <input
+                            ref={passwordRef}
                             type={viewPassword ? 'text' : 'password'}
                             id='password'
                             className='p-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base w-full'
                             placeholder='Enter your password'
-                            onChange={e => setUsers(prev => ({
+                            onChange={e => setUser(prev => ({
                                 ...prev,
                                 [e.target.id]: e.target.value
                             }))}
-                            requireds
+                            required
                         />
-                        <button
-                            type='button'
-                            onClick={() => setViewPassword(!viewPassword)}
-                            className='absolute bg-[#57575742] p-[18px] rounded-lg right-0 top-1/2 -translate-y-1/2'
+                        <div
+                            onClick={() => {
+                                setViewPassword(!viewPassword)
+                                passwordRef.current.focus()
+                            }}
+                            className='absolute bg-[#57575742] p-[18px] rounded-lg right-0 top-1/2 -translate-y-1/2 cursor-pointer'
                         >
                             {viewPassword ? <EyeShow /> : <EyeHide />}
-                        </button>
+                        </div>
                     </div>
                 </div>
                 <button
                     type='submit'
-                    onClick={onsubmit}
                     className='w-full mt-[30px] rounded-md py-4 px-6 bg-[#1f1f1f] text-white font-semibold text-lg'
                 >
                     {loading ? <Loading color={'white'} size={'28px'} /> : 'Create Account'}

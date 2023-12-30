@@ -1,11 +1,11 @@
 "use client"
 
 import { addDoc, doc, getDocs, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore'
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { attendanceCollection, courseCollection, database, usersCollection } from '../firebase/fireBaseConfig'
 import { NextUIProvider } from '@nextui-org/react'
-import { read, utils, writeFile, writeFileXLSX } from 'xlsx'
+import { utils, writeFile, writeFileXLSX } from 'xlsx'
 
 export const AppContext = createContext('')
 
@@ -30,12 +30,15 @@ export default function AppContextProvider({ children }) {
     const [viewCourseDetailModal, setViewCourseDetailModal] = useState(false)
     const [viewAttendanceTable, setViewAttendanceTable] = useState(false)
     const [attendance, setAttendance] = useState(null)
-    const [users, setUsers] = useState(null)
+    const users = useRef(null)
+    const [user, setUser] = useState(null)
     const [course, setCourse] = useState(null)
+
+    // console.log(users.current)
 
     // Users
     function addUsers() {
-        addDoc(usersCollection, users)
+        addDoc(usersCollection, user)
             .then(() => {
                 toast.success("Data Added to Database Successfully")
             })
@@ -43,6 +46,12 @@ export default function AppContextProvider({ children }) {
                 console.log(error.message)
                 toast.error("Error in Send Data to the Database")
             })
+    }
+
+    function getUsers() {
+        onSnapshot(usersCollection, (response) => {
+            users.current = response.docs.map((item) => ({ ...item.data(), uuId: item.id }))
+        })
     }
 
     // Course
@@ -103,9 +112,17 @@ export default function AppContextProvider({ children }) {
         })
     }
 
+    function deleteAttendance(uuID) {
+        deleteDoc(doc(database, "attendance", uuID))
+            .then()
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
+
     function clearAttendance() {
         attendance?.map(item => (
-            deleteDoc(doc(database, "attendance", item.id))
+            deleteDoc(doc(database, "attendance", item.uuID))
                 .then()
                 .catch(error => {
                     console.log(error.message)
@@ -124,11 +141,12 @@ export default function AppContextProvider({ children }) {
     useEffect(() => {
         getCourse()
         getAttendance()
+        getUsers()
         // setCourse(prev => ({ ...prev, lecturerInCharge: `${lecturer.prefix} ${lecturer.name}` }))
     }, [])
 
     return (
-        <AppContext.Provider value={{ viewCourseDetailModal, setViewCourseDetailModal, lecturer, student, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, setUsers, addUsers, OnExportAttendance }}>
+        <AppContext.Provider value={{ viewCourseDetailModal, setViewCourseDetailModal, lecturer, student, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, user, setUser, addUsers, OnExportAttendance, deleteAttendance }}>
             <NextUIProvider>
                 {children}
             </NextUIProvider>

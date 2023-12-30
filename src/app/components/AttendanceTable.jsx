@@ -8,7 +8,7 @@ import { Close, Delete } from './SVGs'
 const columns = ["SN", "Name", "Matric. Number", ""];
 
 export default function AttendanceTable() {
-    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance } = useAppContext()
+    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance, deleteAttendance } = useAppContext()
 
     return viewAttendanceTable && (
         // Fade background
@@ -56,7 +56,9 @@ export default function AttendanceTable() {
                                     <TableCell>{item.sn}</TableCell>
                                     <TableCell>{item.name}</TableCell>
                                     <TableCell>{item.matricNumber}</TableCell>
-                                    <TableCell><button className='text-red-600'><Delete color={"rgb(220 38 38)"} /></button></TableCell>
+                                    <TableCell>
+                                        <button onClick={() => deleteAttendance(item.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import AuthLayout from '../layouts/AuthLayout'
 import Link from 'next/link'
 import { EyeHide, EyeShow, Loading } from '../components/SVGs'
@@ -8,6 +8,7 @@ import { EyeHide, EyeShow, Loading } from '../components/SVGs'
 function Page() {
     const [loading, setLoading] = useState(false)
     const [viewPassword, setViewPassword] = useState(false)
+    const passwordRef = useRef()
 
     const onsubmit = (e) => {
         e.preventDefault()
@@ -26,7 +27,7 @@ function Page() {
                     </label>
                     <input
                         type="text"
-                        id='userID'
+                        id='matricNumber'
                         className='py-4 px-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base'
                         placeholder='Enter your user ID'
                         required
@@ -42,11 +43,15 @@ function Page() {
                             id='password'
                             className='py-4 px-3 bg-transparent border border-[#575757] rounded-md text-[#1f1f1f] font-medium text-base w-full'
                             placeholder='Enter your password'
+                            ref={passwordRef}
                             required
                         />
                         <button
                             type='button'
-                            onClick={() => setViewPassword(!viewPassword)}
+                            onClick={() => {
+                                setViewPassword(!viewPassword)
+                                passwordRef.current.focus()
+                            }}
                             className='absolute bg-[#57575742] p-[21px] rounded-lg right-0 top-1/2 -translate-y-1/2'
                         >
                             {viewPassword ? <EyeShow /> : <EyeHide />}
