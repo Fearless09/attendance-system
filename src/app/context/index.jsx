@@ -158,7 +158,7 @@ export default function AppContextProvider({ children }) {
         getAttendance()
         getUsers()
 
-        sessionUser && setCurrentUser(sessionUser)
+        // sessionUser && setCurrentUser(sessionUser)
     }, [])
 
     return (
