@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { EyeHide, EyeShow, Loading } from '../components/SVGs'
 import { useAppContext } from '../context'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 const prefix = ["", "Mr.", "Mrs.", "Dr.", "Prof."]
 
@@ -17,6 +18,8 @@ function Page() {
     const [errorState, setErrorState] = useState(false)
     const passwordRef = useRef()
 
+    const router = useRouter()
+
     const onsubmit = (e) => {
         e.preventDefault()
 
@@ -26,6 +29,8 @@ function Page() {
         } else {
             setErrorState(false)
             addUsers(user)
+            router.push('/login')
+            toast.success("Accont Registered Successfully, please login")
         }
     }
 
