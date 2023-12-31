@@ -8,14 +8,12 @@ import { toast } from 'react-toastify'
 const elapseTime = [5, 10, 15, 20, 25, 30]
 
 export default function CourseDetailsModal() {
-    const [loading, setLoading] = useState(false)
-    const { viewCourseDetailModal, setViewCourseDetailModal, setCourse, updateCourse, currentUser } = useAppContext()
+    const { viewCourseDetailModal, setViewCourseDetailModal, setCourse, updateCourse, currentUser, loading } = useAppContext()
 
     const onsubmit = (e) => {
         e.preventDefault()
         updateCourse()
         setViewCourseDetailModal(false)
-        // console.log(course)
     }
 
     return viewCourseDetailModal && (
@@ -33,7 +31,7 @@ export default function CourseDetailsModal() {
                     </button>
                 </div>
 
-                <form className='mt-[25px]'>
+                <form onSubmit={onsubmit} className='mt-[25px]'>
                     {/* Course Title */}
                     <div className='grid gap-1'>
                         <label className='ps-1 font-medium text-base' htmlFor="courseTitle">

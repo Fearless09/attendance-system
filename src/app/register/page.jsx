@@ -11,10 +11,9 @@ const prefix = ["", "Mr.", "Mrs.", "Dr.", "Prof."]
 
 function Page() {
     const [active, setActive] = useState('students')
-    const [loading, setLoading] = useState(false)
     const [viewPassword, setViewPassword] = useState(false)
     const [user, setUser] = useState(null)
-    const { users, addUsers } = useAppContext()
+    const { users, addUsers, loading } = useAppContext()
     const [errorState, setErrorState] = useState(false)
     const passwordRef = useRef()
 
@@ -26,7 +25,7 @@ function Page() {
             setErrorState(true)
         } else {
             setErrorState(false)
-            addUsers()
+            addUsers(user)
         }
     }
 

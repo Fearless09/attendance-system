@@ -10,9 +10,6 @@ export default function StudentLayout({ children }) {
     const { viewSideBar, setViewSideBar, sessionUser } = useAppContext()
     const router = useRouter()
 
-    // useEffect(() => {
-    //     if (!sessionUser) router.push('/login')
-    // }, [])
     return (
         <div className={`p-3 sm:p-5 bg-[url('/pexels-yan-krukau-8197534.jpg')] bg-cover min-h-screen h-full flex items-center justify-center`}>
             <div className={`max-w-[650px] w-full mx-auto rounded-lg shadow-lg p-5 backdrop-blur-lg relative`}>

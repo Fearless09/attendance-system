@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useState } from 'react'
-import { User } from './SVGs'
+import { Loading, User } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function StudentPage() {
-    const { course, addAttendance, attendance, currentUser } = useAppContext()
+    const { course, addAttendance, attendance, currentUser, loading } = useAppContext()
     const [diasble, setDisable] = useState(false)
 
     return (
@@ -50,7 +50,7 @@ export default function StudentPage() {
                             setDisable(true)
                         }}
                     >
-                        Mark Attendance
+                        {loading ? <Loading color={'white'} size={'28px'} /> : "Mark Attendance"}
                     </button>
                 </>
             )}

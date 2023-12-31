@@ -2,11 +2,11 @@
 
 import React from 'react'
 import { useAppContext } from '../context'
-import { User } from './SVGs'
+import { Loading, User } from './SVGs'
 import { toast } from 'react-toastify'
 
 export default function LecturerPage() {
-    const { setViewCourseDetailModal, setViewAttendanceTable, course, endClass, currentUser } = useAppContext()
+    const { setViewCourseDetailModal, setViewAttendanceTable, course, endClass, currentUser, loading } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -44,7 +44,7 @@ export default function LecturerPage() {
                         className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-base font-medium bg-gradient-to-r from-red-500 to-red-700'
                         onClick={() => endClass()}
                     >
-                        End Class
+                        {loading ? <Loading color={'white'} size={'28px'} /> : "End Class"}
                     </button>
                 ) : (
                     <button

@@ -19,6 +19,7 @@ const courseNull = {
 }
 
 export default function AppContextProvider({ children }) {
+    const [loading, setLoading] = useState(false)
     const [viewCourseDetailModal, setViewCourseDetailModal] = useState(false)
     const [viewAttendanceTable, setViewAttendanceTable] = useState(false)
     const [viewSideBar, setViewSideBar] = useState(false)
@@ -30,20 +31,25 @@ export default function AppContextProvider({ children }) {
     const router = useRouter()
 
     // Users
-    function addUsers() {
+    function addUsers(user) {
+        setLoading(true)
         addDoc(usersCollection, user)
             .then(() => {
                 toast.success("Data Added to Database Successfully")
+                setLoading(false)
             })
             .catch((error) => {
                 console.log(error.message)
+                setLoading(false)
                 toast.error("Error in Send Data to the Database")
             })
     }
 
     function getUsers() {
+        setLoading(true)
         onSnapshot(usersCollection, (response) => {
             users.current = response.docs.map((item) => ({ ...item.data(), uuId: item.id }))
+            setLoading(false)
         })
     }
 
@@ -55,75 +61,85 @@ export default function AppContextProvider({ children }) {
 
     // Course
     function updateCourse() {
+        setLoading(true)
         updateDoc(doc(database, "course", "auJTdWdBLGbkBK4HtOYD"), course)
             .then(() => {
+                setLoading(false)
                 toast.success("Data Added to Database Successfully")
             })
             .catch((error) => {
                 console.log(error.message)
+                setLoading(false)
                 toast.error("Error in Send Data to the Database")
             })
     }
     function endClass() {
+        setLoading(true)
         updateDoc(doc(database, "course", "auJTdWdBLGbkBK4HtOYD"), courseNull)
             .then(() => {
+                setLoading(false)
                 toast.success("Class End")
                 setCourse(courseNull)
             })
             .catch((error) => {
+                setLoading(false)
                 console.log(error.message)
                 toast.error("Error in ending class")
             })
     }
 
     function getCourse() {
-        // getDocs(courseCollection)
-        //     .then((response) => {
-        //         setCourse(response.docs.map((item) => item.data())[0])
-        //         // toast.success(`${response.docs.map((item) => item.data())[0]?.courseCode.toUpperCase()} class is on-going`)
-        //     }).catch(error => toast.error(error.message))
+        setLoading(true)
         onSnapshot(courseCollection, (response) => {
             setCourse(response.docs.map((item) => item.data())[0])
+            setLoading(false)
         })
     }
 
     // Attendance
     function addAttendance() {
+        setLoading(true)
         addDoc(attendanceCollection, currentUser)
             .then(() => {
+                setLoading(false)
                 toast.success("Data Added to Database Successfully")
             })
             .catch((error) => {
                 console.log(error.message)
+                setLoading(false)
                 toast.error("Error in Send Data to the Database")
             })
     }
 
     function getAttendance() {
-        // getDocs(attendanceCollection)
-        //     .then((response) => {
-        //         setAttendance(response.docs.map((item) => item.data()))
-        //         // console.log(response.docs.map((item) => item.data()))
-        //     }).catch(error => toast.error(error.message))
+        setLoading(true)
         onSnapshot(attendanceCollection, (response) => {
             setAttendance(response.docs.map((item, index) => ({ sn: (index + 1), ...item.data(), uuId: item.id })))
-            // console.log(response.docs.map((item) => ({ ...item.data(), id: item.id })))
+            setLoading(false)
         })
     }
 
     function deleteAttendance(uuID) {
+        setLoading(true)
         deleteDoc(doc(database, "attendance", uuID))
-            .then()
+            .then(()=>{
+                setLoading(false)
+            })
             .catch(error => {
+                setLoading(false)
                 console.log(error.message)
             })
     }
 
     function clearAttendance() {
+        setLoading(true)
         attendance?.map(item => (
             deleteDoc(doc(database, "attendance", item.uuID))
-                .then()
+                .then(()=>{
+                    setLoading(false)
+                })
                 .catch(error => {
+                    setLoading(false)
                     console.log(error.message)
                 })
         ))
@@ -147,7 +163,7 @@ export default function AppContextProvider({ children }) {
 
     return (
         <AppContext.Provider value={
-            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, sessionUser }
+            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, sessionUser, loading }
         }>
             <NextUIProvider>
                 {children}

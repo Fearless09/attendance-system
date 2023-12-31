@@ -9,11 +9,10 @@ import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
 
 function Page() {
-    const [loading, setLoading] = useState(false)
     const [viewPassword, setViewPassword] = useState(false)
     const [user, setUser] = useState(null)
     const passwordRef = useRef()
-    const { users, currentUser, setCurrentUser } = useAppContext()
+    const { users, currentUser, setCurrentUser, loading } = useAppContext()
     const [errorState, setErrorState] = useState({
         matricNumber: false,
         password: false
@@ -35,9 +34,8 @@ function Page() {
         }
 
         sessionStorage.setItem("currentUser", JSON.stringify(users?.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber.toLowerCase())))
-        
+
         router.push(currentUser?.role)
-        // console.log(user)
     }
     return (
         <AuthLayout text={"Login"}>
