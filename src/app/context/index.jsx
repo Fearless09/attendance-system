@@ -9,7 +9,7 @@ import { utils, writeFile } from 'xlsx'
 import { useRouter } from 'next/navigation'
 
 export const AppContext = createContext('')
-const sessionUser = JSON.parse(sessionStorage.getItem("currentUser"))
+const sessionUser = JSON.parse(sessionStorage?.getItem("currentUser"))
 
 const courseNull = {
     courseCode: null,
