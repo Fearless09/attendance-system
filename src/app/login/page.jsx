@@ -124,7 +124,7 @@ function Page() {
             </form>
             <div className='mt-2 text-right hover:text-[#000] text-[#181717]'>
                 <Link href={'/register'}>
-                    Don't have an account?
+                    Don&apos;t have an account?
                 </Link>
             </div>
         </AuthLayout>
