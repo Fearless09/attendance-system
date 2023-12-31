@@ -163,7 +163,7 @@ export default function AppContextProvider({ children }) {
 
     return (
         <AppContext.Provider value={
-            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, sessionUser, loading }
+            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, loading }
         }>
             <NextUIProvider>
                 {children}
