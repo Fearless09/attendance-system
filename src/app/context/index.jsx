@@ -5,19 +5,11 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { toast } from 'react-toastify'
 import { attendanceCollection, courseCollection, database, usersCollection } from '../firebase/fireBaseConfig'
 import { NextUIProvider } from '@nextui-org/react'
-import { utils, writeFile, writeFileXLSX } from 'xlsx'
+import { utils, writeFile } from 'xlsx'
+import { useRouter } from 'next/navigation'
 
 export const AppContext = createContext('')
-
-const lecturer = {
-    prefix: "Dr.",
-    name: "S. I. Olotu",
-    userName: "IFT172408",
-}
-const student = {
-    name: "Ajayi Toheeb Opeyemi",
-    matricNumber: "IFT172408"
-}
+const sessionUser = JSON.parse(sessionStorage.getItem("currentUser"))
 
 const courseNull = {
     courseCode: null,
@@ -29,12 +21,13 @@ const courseNull = {
 export default function AppContextProvider({ children }) {
     const [viewCourseDetailModal, setViewCourseDetailModal] = useState(false)
     const [viewAttendanceTable, setViewAttendanceTable] = useState(false)
+    const [viewSideBar, setViewSideBar] = useState(false)
     const [attendance, setAttendance] = useState(null)
     const users = useRef(null)
-    const [user, setUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState(null)
     const [course, setCourse] = useState(null)
 
-    // console.log(users.current)
+    const router = useRouter()
 
     // Users
     function addUsers() {
@@ -52,6 +45,12 @@ export default function AppContextProvider({ children }) {
         onSnapshot(usersCollection, (response) => {
             users.current = response.docs.map((item) => ({ ...item.data(), uuId: item.id }))
         })
+    }
+
+    function onLogOut() {
+        setCurrentUser(null)
+        sessionStorage.clear()
+        router.push('/')
     }
 
     // Course
@@ -90,7 +89,7 @@ export default function AppContextProvider({ children }) {
 
     // Attendance
     function addAttendance() {
-        addDoc(attendanceCollection, student)
+        addDoc(attendanceCollection, currentUser)
             .then(() => {
                 toast.success("Data Added to Database Successfully")
             })
@@ -142,11 +141,14 @@ export default function AppContextProvider({ children }) {
         getCourse()
         getAttendance()
         getUsers()
-        // setCourse(prev => ({ ...prev, lecturerInCharge: `${lecturer.prefix} ${lecturer.name}` }))
+
+        sessionUser && setCurrentUser(sessionUser)
     }, [])
 
     return (
-        <AppContext.Provider value={{ viewCourseDetailModal, setViewCourseDetailModal, lecturer, student, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, user, setUser, addUsers, OnExportAttendance, deleteAttendance }}>
+        <AppContext.Provider value={
+            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, sessionUser }
+        }>
             <NextUIProvider>
                 {children}
             </NextUIProvider>

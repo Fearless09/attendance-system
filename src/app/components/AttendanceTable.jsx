@@ -54,7 +54,7 @@ export default function AttendanceTable() {
                             {attendance?.map((item) => (
                                 <TableRow key={item.sn}>
                                     <TableCell>{item.sn}</TableCell>
-                                    <TableCell>{item.name}</TableCell>
+                                    <TableCell>{item.fullName}</TableCell>
                                     <TableCell>{item.matricNumber}</TableCell>
                                     <TableCell>
                                         <button onClick={() => deleteAttendance(item.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>

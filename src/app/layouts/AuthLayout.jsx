@@ -3,6 +3,7 @@
 import React from 'react'
 import { BackArrow, Star } from '../components/SVGs'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 function AuthLayout({ children, text }) {
     const router = useRouter()
@@ -16,11 +17,11 @@ function AuthLayout({ children, text }) {
                     >
                         <BackArrow />
                     </button>
-                    <button
-                        onClick={() => router.push('/')}
+                    <Link
+                        href={'/'}
                     >
                         <Star color={'#1f1f1f'} />
-                    </button>
+                    </Link>
                 </div>
                 <div className='px-3 sm:px-16 py-12'>
                     <h1 className='text-4xl font-medium'>

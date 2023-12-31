@@ -5,7 +5,7 @@ import { User } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function StudentPage() {
-    const { course, student, addAttendance, attendance } = useAppContext()
+    const { course, addAttendance, attendance, currentUser } = useAppContext()
     const [diasble, setDisable] = useState(false)
 
     return (
@@ -15,10 +15,10 @@ export default function StudentPage() {
                 <User size={"170px"} color={"white"} />
             </div>
             <h1 className='mt-10 font-medium text-3xl text-white'>
-                {student?.name}
+                {currentUser?.fullName}
             </h1>
             <h2 className='uppercase mt-4 font-medium text-xl text-white'>
-                {student?.matricNumber}
+                {currentUser?.matricNumber}
             </h2>
 
             {(course?.courseCode || course?.courseTitle) && (
@@ -44,7 +44,7 @@ export default function StudentPage() {
                     </h2>
                     <button
                         className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-lg font-medium bg-gradient-to-r from-[#292727] to-[#222121] disabled:opacity-85'
-                        disabled={attendance?.find(item => item.userName === student.userName)}
+                        disabled={attendance?.find(item => item.userName === currentUser?.userName)}
                         onClick={() => {
                             addAttendance()
                             setDisable(true)

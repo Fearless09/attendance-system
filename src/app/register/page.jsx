@@ -13,7 +13,8 @@ function Page() {
     const [active, setActive] = useState('students')
     const [loading, setLoading] = useState(false)
     const [viewPassword, setViewPassword] = useState(false)
-    const { users, user, setUser, addUsers } = useAppContext()
+    const [user, setUser] = useState(null)
+    const { users, addUsers } = useAppContext()
     const [errorState, setErrorState] = useState(false)
     const passwordRef = useRef()
 
@@ -136,7 +137,7 @@ function Page() {
                         required
                     />
                     {errorState && (
-                        <p className='text-red-600 ps-1'>User exist, try different ID</p>
+                        <p className='-mt-1 text-red-600 ps-1'>User exist, try different ID</p>
                     )}
                 </div>
                 {/* Password */}

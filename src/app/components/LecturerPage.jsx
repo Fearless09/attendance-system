@@ -6,7 +6,7 @@ import { User } from './SVGs'
 import { toast } from 'react-toastify'
 
 export default function LecturerPage() {
-    const { setViewCourseDetailModal, setViewAttendanceTable, lecturer, course, endClass } = useAppContext()
+    const { setViewCourseDetailModal, setViewAttendanceTable, course, endClass, currentUser } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -15,10 +15,10 @@ export default function LecturerPage() {
                 <User size={"170px"} color={"white"} />
             </div>
             <h1 className='mt-10 font-medium text-3xl text-white'>
-                {lecturer?.prefix} {lecturer?.name}
+                {currentUser?.prefix} {currentUser?.fullName}
             </h1>
             <h2 className='uppercase mt-3 font-medium text-xl text-white'>
-                {lecturer?.userName}
+                {currentUser?.matricNumber}
             </h2>
 
             {(course?.courseCode || course?.courseTitle) && (

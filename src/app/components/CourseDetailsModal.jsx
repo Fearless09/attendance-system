@@ -9,7 +9,7 @@ const elapseTime = [5, 10, 15, 20, 25, 30]
 
 export default function CourseDetailsModal() {
     const [loading, setLoading] = useState(false)
-    const { viewCourseDetailModal, setViewCourseDetailModal, lecturer, setLecturer, course, setCourse, updateCourse } = useAppContext()
+    const { viewCourseDetailModal, setViewCourseDetailModal, setCourse, updateCourse, currentUser } = useAppContext()
 
     const onsubmit = (e) => {
         e.preventDefault()
@@ -48,7 +48,7 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: e.target.value,
-                                lecturerInCharge: `${lecturer.prefix} ${lecturer.name}`
+                                lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
                         />
@@ -67,7 +67,7 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: e.target.value,
-                                lecturerInCharge: `${lecturer.prefix} ${lecturer.name}`
+                                lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
                         />
@@ -84,7 +84,7 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: Number(e.target.value),
-                                lecturerInCharge: `${lecturer.prefix} ${lecturer.name}`
+                                lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
                         >
