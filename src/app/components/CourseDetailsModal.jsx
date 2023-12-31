@@ -17,7 +17,7 @@ export default function CourseDetailsModal() {
     }
 
     return viewCourseDetailModal && (
-        <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center'>
+        <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center p-4 sm:p-6'>
             <div className={`max-w-[550px] w-full mx-auto rounded-lg shadow-2xl px-7 py-10 backdrop-blur-lg`}>
                 <div className='flex items-center justify-between gap-5'>
                     <h1 className='text-center text-2xl'>Filling the course details</h1>

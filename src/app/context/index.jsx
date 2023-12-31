@@ -1,6 +1,6 @@
 "use client"
 
-import { addDoc, doc, getDocs, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore'
+import { addDoc, doc, updateDoc, onSnapshot, deleteDoc } from 'firebase/firestore'
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { attendanceCollection, courseCollection, database, usersCollection } from '../firebase/fireBaseConfig'
@@ -122,7 +122,7 @@ export default function AppContextProvider({ children }) {
     function deleteAttendance(uuID) {
         setLoading(true)
         deleteDoc(doc(database, "attendance", uuID))
-            .then(()=>{
+            .then(() => {
                 setLoading(false)
             })
             .catch(error => {
@@ -134,8 +134,8 @@ export default function AppContextProvider({ children }) {
     function clearAttendance() {
         setLoading(true)
         attendance?.map(item => (
-            deleteDoc(doc(database, "attendance", item.uuID))
-                .then(()=>{
+            deleteDoc(doc(database, "attendance", item.uuId))
+                .then(() => {
                     setLoading(false)
                 })
                 .catch(error => {

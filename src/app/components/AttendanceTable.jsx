@@ -3,16 +3,16 @@
 import React from 'react'
 import { useAppContext } from '../context'
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
-import { Close, Delete } from './SVGs'
+import { Close, Delete, Loading } from './SVGs'
 
 const columns = ["SN", "Name", "Matric. Number", ""];
 
 export default function AttendanceTable() {
-    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance, deleteAttendance } = useAppContext()
+    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance, deleteAttendance, loading } = useAppContext()
 
     return viewAttendanceTable && (
         // Fade background
-        <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] flex items-center justify-center'>
+        <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] flex items-center justify-center p-4 sm:p-6'>
             {/* Modal Contents */}
             <div className={`max-w-[850px] w-full mx-auto rounded-lg shadow-2xl px-7 py-10 backdrop-blur-lg`}>
                 <div className='flex items-center justify-between gap-5'>
@@ -28,7 +28,7 @@ export default function AttendanceTable() {
                             onClick={() => clearAttendance()}
                             disabled={!attendance || attendance?.length < 1}
                         >
-                            Clear Attendance
+                            {loading ? <Loading color={'white'} size={'28px'} /> : "Clear Attendance"}
                         </button>
                     </div>
                     <button
