@@ -33,7 +33,7 @@ function Page() {
             setErrorState(prev => ({ ...prev, password: true }))
         }
 
-        // sessionStorage.setItem("currentUser", JSON.stringify(users?.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber.toLowerCase())))
+        sessionStorage.setItem("currentUser", JSON.stringify(users?.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber.toLowerCase())))
 
         router.push(currentUser?.role)
     }
