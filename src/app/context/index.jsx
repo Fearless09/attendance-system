@@ -7,6 +7,7 @@ import { attendanceCollection, courseCollection, database, usersCollection } fro
 import { NextUIProvider } from '@nextui-org/react'
 import { utils, writeFile } from 'xlsx'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 export const AppContext = createContext('')
 
@@ -55,6 +56,7 @@ export default function AppContextProvider({ children }) {
     function onLogOut() {
         setCurrentUser(null)
         sessionStorage.clear()
+        Cookies.remove("Authenticated")
         router.push('/')
     }
 

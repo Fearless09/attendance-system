@@ -7,6 +7,7 @@ import { EyeHide, EyeShow, Loading } from '../components/SVGs'
 import { useAppContext } from '../context'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 function Page() {
     const [viewPassword, setViewPassword] = useState(false)
@@ -34,6 +35,7 @@ function Page() {
         }
 
         sessionStorage.setItem("currentUser", JSON.stringify(users?.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber.toLowerCase())))
+        Cookies.set("Authenticated", true)
 
         router.push(currentUser?.role)
     }

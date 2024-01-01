@@ -5,10 +5,15 @@ import { Close, Hamburger, Star } from '../components/SVGs'
 import SideBar from '../components/SideBar'
 import { useAppContext } from '../context'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 export default function StudentLayout({ children }) {
     const { viewSideBar, setViewSideBar, sessionUser } = useAppContext()
     const router = useRouter()
+
+    useEffect(() => {
+        if (!Cookies.get("Authenticated")) return router.push('/login')
+    }, [])
 
     return (
         <div className={`p-3 sm:p-5 bg-[url('/pexels-yan-krukau-8197534.jpg')] bg-cover min-h-screen h-full flex items-center justify-center`}>

@@ -5,15 +5,16 @@ import { Close, Hamburger, Star } from '../components/SVGs'
 import { useAppContext } from '../context'
 import SideBar from '../components/SideBar'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 export default function LecturerLayout({ children }) {
     const { viewSideBar, setViewSideBar, sessionUser } = useAppContext()
 
     const router = useRouter()
 
-    // useEffect(() => {
-    //     if (!sessionUser) router.push('/login')
-    // }, [sessionUser])
+    useEffect(() => {
+        if (!Cookies.get("Authenticated")) return router.push('/login')
+    }, [])
     return (
         <div className={`p-3 sm:p-5 bg-[url('/pexels-yan-krukau-8197534.jpg')] bg-cover min-h-screen h-full flex items-center justify-center`}>
             <div className={`max-w-[1024px] w-full mx-auto rounded-lg shadow-lg p-5 backdrop-blur-lg`}>
