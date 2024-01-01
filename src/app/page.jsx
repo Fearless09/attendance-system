@@ -13,7 +13,7 @@ export default function Home() {
         </div>
 
         <div className='mt-[50px] grid gap-20 items-center justify-center'>
-          <h1 className='text-[#181717] text-4xl font-semibold'>Smart Attendance System</h1>
+          <h1 className='text-[#181717] text-4xl font-semibold text-center'>Smart Attendance System</h1>
           <Link
             href={'/login'}
             className='py-4 px-10 rounded-lg text-white text-lg font-medium bg-gradient-to-t from-[#181717] to-[#1f1f1f] active:scale-[0.95] uppercase text-center'
