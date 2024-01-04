@@ -58,6 +58,7 @@ export default function AppContextProvider({ children }) {
         sessionStorage.clear()
         Cookies.remove("Authenticated")
         router.push('/')
+        setViewSideBar(false)
     }
 
     // Course
