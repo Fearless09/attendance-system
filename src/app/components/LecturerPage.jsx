@@ -3,10 +3,9 @@
 import React from 'react'
 import { useAppContext } from '../context'
 import { Loading, User } from './SVGs'
-import { toast } from 'react-toastify'
 
 export default function LecturerPage() {
-    const { setViewCourseDetailModal, setViewAttendanceTable, course, endClass, currentUser, loading } = useAppContext()
+    const { setViewAttendanceTable, courses, endClass, currentUser, loading, setViewCourses } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -20,29 +19,34 @@ export default function LecturerPage() {
             <h2 className='uppercase mt-3 font-medium text-xl text-white'>
                 {currentUser?.matricNumber}
             </h2>
-
-            {(course?.courseCode || course?.courseTitle) && (
+            
+            {courses && courses[courses.length - 1]?.onGoing && (
                 <h3 className='mt-8 text-white text-xl capitalize flex gap-3 items-center justify-center'>
                     <span className='inline-block w-[13px] aspect-square rounded-full bg-green-500 animate-ping '></span>
                     <span>On going class</span>
                 </h3>
             )}
-            {course?.courseCode && (
+            {courses && courses[courses.length - 1]?.courseCode && (
                 <h2 className='mt-3 uppercase text-2xl text-white'>
-                    {course?.courseCode}
+                    {courses[courses.length - 1]?.courseCode}
                 </h2>
             )}
-            {course?.courseTitle && (
+            {courses && courses[courses.length - 1]?.courseTitle && (
                 <h2 className='mt-2 capitalize text-xl text-white'>
-                    {course?.courseTitle}
+                    {courses[courses.length - 1]?.courseTitle}
+                </h2>
+            )}
+            {courses && courses[courses.length - 1]?.date && (
+                <h2 className='mt-2 capitalize text-xl text-white'>
+                    {courses[courses.length - 1]?.date}
                 </h2>
             )}
 
             <div className='flex justify-center items-center gap-4'>
-                {(course?.courseCode || course?.courseTitle) ? (
+                {courses && courses[courses.length - 1]?.onGoing ? (
                     <button
                         className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-base font-medium bg-gradient-to-r from-red-500 to-red-700'
-                        onClick={() => endClass()}
+                        onClick={() => endClass(courses[courses.length - 1]?.uuId)}
                     >
                         {loading ? <Loading color={'white'} size={'28px'} /> : "End Class"}
                     </button>
@@ -50,11 +54,13 @@ export default function LecturerPage() {
                     <button
                         className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-base font-medium bg-gradient-to-t from-[#181717] to-[#1f1f1f]'
                         onClick={() => {
-                            setViewCourseDetailModal(true)
-                            toast.warn('Please fill in the course details')
+                            // setViewCourseDetailModal(true)
+                            // toast.warn('Please fill in the course details')
+                            setViewCourses(true)
                         }}
                     >
-                        Start Attendance
+                        {/* Start Attendance */}
+                        Manage Classes
                     </button>
                 )}
                 <button

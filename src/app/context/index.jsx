@@ -21,12 +21,14 @@ const courseNull = {
 export default function AppContextProvider({ children }) {
     const [loading, setLoading] = useState(false)
     const [viewCourseDetailModal, setViewCourseDetailModal] = useState(false)
+    const [viewCourses, setViewCourses] = useState(false)
     const [viewAttendanceTable, setViewAttendanceTable] = useState(false)
     const [viewSideBar, setViewSideBar] = useState(false)
     const [attendance, setAttendance] = useState(null)
     const users = useRef(null)
     const [currentUser, setCurrentUser] = useState(null)
     const [course, setCourse] = useState(null)
+    const [courses, setCourses] = useState(null)
 
     const router = useRouter()
 
@@ -64,7 +66,17 @@ export default function AppContextProvider({ children }) {
     // Course
     function updateCourse() {
         setLoading(true)
-        updateDoc(doc(database, "course", "auJTdWdBLGbkBK4HtOYD"), course)
+        // updateDoc(doc(database, "course", "auJTdWdBLGbkBK4HtOYD"), course)
+        //     .then(() => {
+        //         setLoading(false)
+        //         toast.success("Data Added to Database Successfully")
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message)
+        //         setLoading(false)
+        //         toast.error("Error in Send Data to the Database")
+        //     })
+        addDoc(courseCollection, course)
             .then(() => {
                 setLoading(false)
                 toast.success("Data Added to Database Successfully")
@@ -75,9 +87,10 @@ export default function AppContextProvider({ children }) {
                 toast.error("Error in Send Data to the Database")
             })
     }
-    function endClass() {
+
+    function endClass(uuID) {
         setLoading(true)
-        updateDoc(doc(database, "course", "auJTdWdBLGbkBK4HtOYD"), courseNull)
+        updateDoc(doc(database, "course", uuID), { onGoing: false })
             .then(() => {
                 setLoading(false)
                 toast.success("Class End")
@@ -90,10 +103,24 @@ export default function AppContextProvider({ children }) {
             })
     }
 
+    function deleteClass(uuID) {
+        setLoading(true)
+        deleteDoc(doc(database, "course", uuID))
+            .then(() => {
+                setLoading(false)
+            })
+            .catch(error => {
+                setLoading(false)
+                console.log(error.message)
+            })
+    }
+
     function getCourse() {
         setLoading(true)
         onSnapshot(courseCollection, (response) => {
             setCourse(response.docs.map((item) => item.data())[0])
+            setCourses(response.docs.map((item) => ({ ...item.data(), uuId: item.id })))
+            // console.log(response.docs.map((item) => ({ ...item.data(), uuId: item.id })))
             setLoading(false)
         })
     }
@@ -166,7 +193,7 @@ export default function AppContextProvider({ children }) {
 
     return (
         <AppContext.Provider value={
-            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, loading }
+            { viewCourseDetailModal, setViewCourseDetailModal, course, setCourse, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, loading, viewCourses, setViewCourses, courses, setCourses, deleteClass }
         }>
             <NextUIProvider>
                 {children}

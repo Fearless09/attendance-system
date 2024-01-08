@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Close, Loading } from './SVGs'
 import { useAppContext } from '../context'
 import { toast } from 'react-toastify'
@@ -46,6 +46,8 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: e.target.value,
+                                onGoing: true,
+                                date: new Date().toLocaleString(),
                                 lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
@@ -65,6 +67,8 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: e.target.value,
+                                onGoing: true,
+                                date: new Date().toLocaleString(),
                                 lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
@@ -82,6 +86,8 @@ export default function CourseDetailsModal() {
                             onChange={e => setCourse(prev => ({
                                 ...prev,
                                 [e.target.name]: Number(e.target.value),
+                                onGoing: true,
+                                date: new Date().toLocaleString(),
                                 lecturerInCharge: `${currentUser?.prefix} ${currentUser?.fullName}`
                             }))}
                             required
