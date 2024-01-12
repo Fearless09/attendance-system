@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 
 export default function StudentLayout({ children }) {
-    const { viewSideBar, setViewSideBar, sessionUser } = useAppContext()
+    const { viewSideBar, setViewSideBar } = useAppContext()
     const router = useRouter()
 
     useEffect(() => {

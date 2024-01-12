@@ -5,7 +5,7 @@ import { useAppContext } from '../context'
 import { Close, Loading } from './SVGs'
 
 export default function StudentClasses() {
-    const { viewCourses, setViewCourses, courses, attendance, loading, currentUser, addAttendance, currentCourse, setCurrentCourse } = useAppContext()
+    const { viewCourses, setViewCourses, courses, loading, addAttendance, setCurrentCourse } = useAppContext()
 
     return viewCourses && (
         <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center p-4 sm:p-6'>
@@ -54,12 +54,6 @@ export default function StudentClasses() {
                             >
                                 {loading ? <Loading color={'white'} size={'28px'} /> : "Mark Attendance"}
                             </button>
-                            {/* <button
-                                    className='mt-2 py-3 px-5 rounded-lg  text-white capitalize text-base font-medium bg-gradient-to-r from-blue-700 to-blue-900'
-                                    onClick={() => setViewAttendanceTable(true)}
-                                >
-                                    Mark Attendance
-                                </button> */}
                         </div>
                     ))}
                 </div>

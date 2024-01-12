@@ -18,4 +18,3 @@ export const database = getFirestore(app)
 
 export const courseCollection = collection(database, "course")
 export const usersCollection = collection(database, "users")
-export const attendanceCollection = collection(database, "attendance")

@@ -12,7 +12,6 @@ function Page() {
             <StudentLayout>
                 <StudentPage />
             </StudentLayout>
-
             {/* Modal */}
             <StudentClasses />
         </>

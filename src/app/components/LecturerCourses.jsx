@@ -5,7 +5,7 @@ import { Close, Delete } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function LecturerCourses() {
-    const { viewCourses, setViewCourses, courses, setViewAttendanceTable, setViewCourseDetailModal, deleteClass, getAttendance, currentCourse, setCurrentCourse } = useAppContext()
+    const { viewCourses, setViewCourses, courses, setViewCourseDetailModal, deleteClass, getAttendance, setCurrentCourse } = useAppContext()
 
     return viewCourses && (
         <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center p-4 sm:p-6'>

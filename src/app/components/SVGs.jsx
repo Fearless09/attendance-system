@@ -1,4 +1,3 @@
-import { color } from "framer-motion"
 
 export const BackArrow = () => (
     <svg

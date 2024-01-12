@@ -5,7 +5,7 @@ import { Loading, User } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function StudentPage() {
-    const { addAttendance, attendance, currentUser, loading, setViewCourses, currentCourse, } = useAppContext()
+    const { addAttendance, currentUser, loading, setViewCourses, currentCourse, } = useAppContext()
 
     return (
         <div className='text-center'>

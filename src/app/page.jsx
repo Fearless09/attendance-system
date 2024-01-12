@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Star } from './components/SVGs'
 import Link from 'next/link'
 

@@ -25,7 +25,7 @@ export default function AttendanceTable() {
                         </button>
                         <button
                             className='py-4 px-10 rounded-lg text-white capitalize text-base font-medium bg-gradient-to-r from-red-500 to-red-700 active:scale-[0.95] disabled:opacity-85'
-                            onClick={() => clearAttendance()}
+                            onClick={() => clearAttendance(`${currentCourse?.courseCode}_attendance`)}
                             disabled={!attendance || attendance?.length < 1}
                         >
                             {loading ? <Loading color={'white'} size={'28px'} /> : "Clear Attendance"}
@@ -62,7 +62,7 @@ export default function AttendanceTable() {
                                     <TableCell>{item.fullName}</TableCell>
                                     <TableCell>{item.matricNumber}</TableCell>
                                     <TableCell>
-                                        <button onClick={() => deleteAttendance(`${item.courseCode}_attendance`, item.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>
+                                        <button onClick={() => deleteAttendance(`${item?.courseCode}_attendance`, item?.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>
                                     </TableCell>
                                 </TableRow>
                             ))}
