@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Loading, User } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function StudentPage() {
-    const { course, addAttendance, attendance, currentUser, loading } = useAppContext()
-    const [diasble, setDisable] = useState(false)
+    const { courses, addAttendance, attendance, currentUser, loading, setViewCourses } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -21,39 +20,49 @@ export default function StudentPage() {
                 {currentUser?.matricNumber}
             </h2>
 
-            {(course?.courseCode || course?.courseTitle) && (
+            {courses && courses[courses.length - 1]?.onGoing && (
                 <h3 className='mt-8 text-white text-xl capitalize flex gap-3 items-center justify-center'>
                     <span className='inline-block w-[13px] aspect-square rounded-full bg-green-500 animate-ping '></span>
                     <span>On going class</span>
                 </h3>
             )}
-            {course?.courseCode && (
+            {courses && courses[courses.length - 1]?.courseCode && (
                 <h2 className='mt-3 uppercase text-2xl text-white'>
-                    {course?.courseCode}
+                    {courses[courses.length - 1].courseCode}
                 </h2>
             )}
-            {course?.courseTitle && (
+            {courses && courses[courses.length - 1]?.courseTitle && (
                 <h2 className='mt-2 capitalize text-xl text-white'>
-                    {course?.courseTitle}
+                    {courses[courses.length - 1]?.courseTitle}
                 </h2>
             )}
-            {(course?.courseCode || course?.courseTitle) && (
+            {courses && courses[courses.length - 1]?.lecturerInCharge && (
                 <>
                     <h2 className='capitalize mt-3 font-medium text-xl text-white'>
-                        {course?.lecturerInCharge}
+                        {courses[courses.length - 1]?.lecturerInCharge}
+                    </h2>
+                    <h2 className='capitalize mt-3 font-medium text-xl text-white'>
+                        {courses[courses.length - 1]?.date}
                     </h2>
                     <button
-                        className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-lg font-medium bg-gradient-to-r from-[#292727] to-[#222121] disabled:opacity-85'
-                        disabled={attendance?.find(item => item.userName === currentUser?.userName)}
+                        className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-lg font-medium bg-gradient-to-r from-[#292727] to-[#222121] disabled:opacity-65'
+                        disabled={
+                            attendance?.find(item => item.userName === currentUser?.userName) || !courses[courses.length - 1]?.onGoing
+                        }
                         onClick={() => {
                             addAttendance()
-                            setDisable(true)
                         }}
                     >
                         {loading ? <Loading color={'white'} size={'28px'} /> : "Mark Attendance"}
                     </button>
                 </>
             )}
+            <button
+                className='mt-8 mx-auto block py-4 px-10 rounded-lg  text-white capitalize text-base font-medium bg-gradient-to-r from-blue-700 to-blue-900'
+                onClick={() => setViewCourses(true)}
+            >
+                View Classes
+            </button>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { useAppContext } from '../context'
 import { Loading, User } from './SVGs'
 
 export default function LecturerPage() {
-    const { setViewAttendanceTable, courses, endClass, currentUser, loading, setViewCourses } = useAppContext()
+    const { getAttendance, courses, endClass, currentUser, loading, setViewCourses } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -19,7 +19,7 @@ export default function LecturerPage() {
             <h2 className='uppercase mt-3 font-medium text-xl text-white'>
                 {currentUser?.matricNumber}
             </h2>
-            
+
             {courses && courses[courses.length - 1]?.onGoing && (
                 <h3 className='mt-8 text-white text-xl capitalize flex gap-3 items-center justify-center'>
                     <span className='inline-block w-[13px] aspect-square rounded-full bg-green-500 animate-ping '></span>
@@ -65,7 +65,7 @@ export default function LecturerPage() {
                 )}
                 <button
                     className='mt-8 py-4 px-10 rounded-lg  text-white capitalize text-base font-medium bg-gradient-to-r from-blue-700 to-blue-900'
-                    onClick={() => setViewAttendanceTable(true)}
+                    onClick={() => getAttendance(`${courses[courses.length - 1]?.courseCode}_attendance`)}
                 >
                     View Attendance
                 </button>

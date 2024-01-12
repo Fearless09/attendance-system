@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Close, Loading } from './SVGs'
 import { useAppContext } from '../context'
 import { toast } from 'react-toastify'
@@ -8,11 +8,12 @@ import { toast } from 'react-toastify'
 const elapseTime = [5, 10, 15, 20, 25, 30]
 
 export default function CourseDetailsModal() {
-    const { viewCourseDetailModal, setViewCourseDetailModal, setCourse, updateCourse, currentUser, loading } = useAppContext()
+    const { viewCourseDetailModal, setViewCourseDetailModal, updateCourse, currentUser, loading } = useAppContext()
+    const [course, setCourse] = useState(null)
 
     const onsubmit = (e) => {
         e.preventDefault()
-        updateCourse()
+        updateCourse(course)
         setViewCourseDetailModal(false)
     }
 

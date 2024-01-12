@@ -5,7 +5,7 @@ import { Close, Delete } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function Courses() {
-    const { viewCourses, setViewCourses, courses, setCourses, setViewAttendanceTable, setViewCourseDetailModal, deleteClass } = useAppContext()
+    const { viewCourses, setViewCourses, courses, setViewAttendanceTable, setViewCourseDetailModal, deleteClass, getAttendance } = useAppContext()
 
     return viewCourses && (
         <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center p-4 sm:p-6'>
@@ -40,7 +40,7 @@ export default function Courses() {
                                 <h3 className='text-xl uppercase'>{item.date}</h3>
                                 <button
                                     className='mt-2 py-3 px-5 rounded-lg  text-white capitalize text-base font-medium bg-gradient-to-r from-blue-700 to-blue-900'
-                                    onClick={() => setViewAttendanceTable(true)}
+                                    onClick={() => getAttendance(`${item.courseCode}_attendance`)}
                                 >
                                     View Attendance
                                 </button>

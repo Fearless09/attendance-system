@@ -57,7 +57,7 @@ export default function AttendanceTable() {
                                     <TableCell>{item.fullName}</TableCell>
                                     <TableCell>{item.matricNumber}</TableCell>
                                     <TableCell>
-                                        <button onClick={() => deleteAttendance(item.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>
+                                        <button onClick={() => deleteAttendance(`${item.courseCode}_attendance`, item.uuId)}><Delete color={"rgb(239 68 68 )"} /></button>
                                     </TableCell>
                                 </TableRow>
                             ))}
