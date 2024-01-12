@@ -14,13 +14,14 @@ export const AppContext = createContext('')
 export default function AppContextProvider({ children }) {
     const [loading, setLoading] = useState(false)
     const [viewCourseDetailModal, setViewCourseDetailModal] = useState(false)
-    const [viewCourses, setViewCourses] = useState(false)
+    const [viewCourses, setViewCourses] = useState(true)
     const [viewAttendanceTable, setViewAttendanceTable] = useState(false)
     const [viewSideBar, setViewSideBar] = useState(false)
     const [attendance, setAttendance] = useState(null)
     const users = useRef(null)
     const [currentUser, setCurrentUser] = useState(null)
     const [courses, setCourses] = useState(null)
+    const [currentCourse, setCurrentCourse] = useState(null)
 
     const router = useRouter()
 
@@ -105,7 +106,7 @@ export default function AppContextProvider({ children }) {
         })
     }
 
-    // Attendance
+    // Attendance Done
     function addAttendance(name) {
         setLoading(true)
         // addDoc(attendanceCollection, currentUser)
@@ -119,7 +120,7 @@ export default function AppContextProvider({ children }) {
         //         toast.error("Error in Send Data to the Database")
         //     })
 
-        addDoc(collection(database, "IFT502_attendance"), currentUser)
+        addDoc(collection(database, name), currentUser)
             .then(() => {
                 setLoading(false)
                 toast.success("Data Added to Database Successfully")
@@ -130,18 +131,18 @@ export default function AppContextProvider({ children }) {
                 toast.error("Error in Send Data to the Database")
             })
 
-        console.log(name)
+        // console.log(name)
 
         // const dynamicAttendance = collection(database, name)
     }
 
     function getAttendance(name) {
         setLoading(true)
-        onSnapshot(collection(database, "IFT502_attendance"), (response) => {
+        onSnapshot(collection(database, name), (response) => {
             setAttendance(response.docs.map((item, index) => ({ sn: (index + 1), ...item.data(), uuId: item.id })))
             setLoading(false)
+            setViewAttendanceTable(true)
         })
-        setViewAttendanceTable(true)
     }
 
     function deleteAttendance(name, uuID) {
@@ -180,7 +181,6 @@ export default function AppContextProvider({ children }) {
 
     useEffect(() => {
         getCourse()
-        // getAttendance()
         getUsers()
 
         const sessionUser = JSON.parse(sessionStorage.getItem("currentUser"))
@@ -189,7 +189,7 @@ export default function AppContextProvider({ children }) {
 
     return (
         <AppContext.Provider value={
-            { viewCourseDetailModal, setViewCourseDetailModal, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, loading, viewCourses, setViewCourses, courses, setCourses, deleteClass, getAttendance }
+            { viewCourseDetailModal, setViewCourseDetailModal, addAttendance, updateCourse, endClass, attendance, viewAttendanceTable, setViewAttendanceTable, clearAttendance, users, currentUser, setCurrentUser, addUsers, OnExportAttendance, deleteAttendance, viewSideBar, setViewSideBar, onLogOut, loading, viewCourses, setViewCourses, courses, setCourses, deleteClass, getAttendance, currentCourse, setCurrentCourse }
         }>
             <NextUIProvider>
                 {children}

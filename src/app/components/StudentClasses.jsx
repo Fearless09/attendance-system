@@ -4,8 +4,8 @@ import React from 'react'
 import { useAppContext } from '../context'
 import { Close, Loading } from './SVGs'
 
-export default function Classes() {
-    const { viewCourses, setViewCourses, courses, attendance, loading, currentUser, addAttendance } = useAppContext()
+export default function StudentClasses() {
+    const { viewCourses, setViewCourses, courses, attendance, loading, currentUser, addAttendance, currentCourse, setCurrentCourse } = useAppContext()
 
     return viewCourses && (
         <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] text-white flex items-center justify-center p-4 sm:p-6'>
@@ -26,6 +26,10 @@ export default function Classes() {
                         <div
                             key={item.uuId}
                             className='rounded-lg border px-4 py-2 hover:bg-[#0000004b]'
+                            onClick={(e) => {
+                                setCurrentCourse(item)
+                                setViewCourses(false)
+                            }}
                         >
                             <h3 className='text-xl capitalize'>{item.courseTitle}</h3>
                             <h3 className='text-xl uppercase'>{item.courseCode}</h3>

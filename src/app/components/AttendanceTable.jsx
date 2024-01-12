@@ -8,7 +8,7 @@ import { Close, Delete, Loading } from './SVGs'
 const columns = ["SN", "Name", "Matric. Number", ""];
 
 export default function AttendanceTable() {
-    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance, deleteAttendance, loading } = useAppContext()
+    const { viewAttendanceTable, setViewAttendanceTable, attendance, clearAttendance, OnExportAttendance, deleteAttendance, loading, currentCourse } = useAppContext()
 
     return viewAttendanceTable && (
         // Fade background
@@ -40,6 +40,11 @@ export default function AttendanceTable() {
 
                 {/*  */}
                 <div className='mt-[25px]'>
+                    <p
+                        className='capitalize text-xl px-2 mb-3 text-white'
+                    >
+                        {currentCourse?.courseTitle} {currentCourse?.courseCode} attendance list
+                    </p>
                     <Table
                         color={"default"}
                         selectionMode="single"

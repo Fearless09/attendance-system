@@ -2,7 +2,7 @@ import React from 'react'
 import { metadata } from '../layout'
 import StudentLayout from '../layouts/StudentLayout'
 import StudentPage from '../components/StudentPage'
-import Classes from '../components/Classes'
+import StudentClasses from '../components/StudentClasses'
 
 metadata.title += ' - Student Portal'
 
@@ -14,7 +14,7 @@ function Page() {
             </StudentLayout>
 
             {/* Modal */}
-            <Classes />
+            <StudentClasses />
         </>
     )
 }

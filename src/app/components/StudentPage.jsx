@@ -5,7 +5,7 @@ import { Loading, User } from './SVGs'
 import { useAppContext } from '../context'
 
 export default function StudentPage() {
-    const { courses, addAttendance, attendance, currentUser, loading, setViewCourses } = useAppContext()
+    const { addAttendance, attendance, currentUser, loading, setViewCourses, currentCourse, } = useAppContext()
 
     return (
         <div className='text-center'>
@@ -20,37 +20,37 @@ export default function StudentPage() {
                 {currentUser?.matricNumber}
             </h2>
 
-            {courses && courses[courses.length - 1]?.onGoing && (
+            {currentCourse?.onGoing && (
                 <h3 className='mt-8 text-white text-xl capitalize flex gap-3 items-center justify-center'>
                     <span className='inline-block w-[13px] aspect-square rounded-full bg-green-500 animate-ping '></span>
                     <span>On going class</span>
                 </h3>
             )}
-            {courses && courses[courses.length - 1]?.courseCode && (
+            {currentCourse?.courseCode && (
                 <h2 className='mt-3 uppercase text-2xl text-white'>
-                    {courses[courses.length - 1].courseCode}
+                    {currentCourse.courseCode}
                 </h2>
             )}
-            {courses && courses[courses.length - 1]?.courseTitle && (
+            {currentCourse?.courseTitle && (
                 <h2 className='mt-2 capitalize text-xl text-white'>
-                    {courses[courses.length - 1]?.courseTitle}
+                    {currentCourse?.courseTitle}
                 </h2>
             )}
-            {courses && courses[courses.length - 1]?.lecturerInCharge && (
+            {currentCourse?.lecturerInCharge && (
                 <>
                     <h2 className='capitalize mt-3 font-medium text-xl text-white'>
-                        {courses[courses.length - 1]?.lecturerInCharge}
+                        {currentCourse?.lecturerInCharge}
                     </h2>
                     <h2 className='capitalize mt-3 font-medium text-xl text-white'>
-                        {courses[courses.length - 1]?.date}
+                        {currentCourse?.date}
                     </h2>
                     <button
                         className='mt-8 py-4 px-10 rounded-lg text-white capitalize text-lg font-medium bg-gradient-to-r from-[#292727] to-[#222121] disabled:opacity-65'
-                        disabled={
-                            attendance?.find(item => item.userName === currentUser?.userName) || !courses[courses.length - 1]?.onGoing
-                        }
+                        // disabled={
+                        //     attendance?.find(item => item.userName === currentUser?.userName) || !currentCourse?.onGoing
+                        // }
                         onClick={() => {
-                            addAttendance()
+                            addAttendance(`${currentCourse.courseCode}_attendance`)
                         }}
                     >
                         {loading ? <Loading color={'white'} size={'28px'} /> : "Mark Attendance"}
