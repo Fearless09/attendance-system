@@ -160,7 +160,7 @@ export default function AppContextProvider({ children }) {
         const wb = utils.book_new()
         const ws = utils.json_to_sheet(attendance)
         utils.book_append_sheet(wb, ws, "Sheet1")
-        writeFile(wb, (`${currentCourse?.courseCode}_attendance` || "Attendance.xlsx"))
+        writeFile(wb, (`${currentCourse?.courseCode}_attendance.xlsx` || "Attendance.xlsx"))
     }
 
     useEffect(() => {

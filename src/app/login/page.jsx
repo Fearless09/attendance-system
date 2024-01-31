@@ -32,6 +32,7 @@ function Page() {
         if (currentUser?.password !== user?.password) {
             toast.error("Incorrect Password, you might want to try forget password")
             setErrorState(prev => ({ ...prev, password: true }))
+            return
         }
 
         sessionStorage.setItem("currentUser", JSON.stringify(users?.current?.find(item => item.matricNumber.toLowerCase() === user?.matricNumber.toLowerCase())))
