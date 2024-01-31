@@ -14,7 +14,7 @@ export default function AttendanceTable() {
         // Fade background
         <div className='fixed left-0 top-0 w-full h-screen bg-[#0000002d] flex items-center justify-center p-4 sm:p-6'>
             {/* Modal Contents */}
-            <div className={`max-w-[850px] w-full mx-auto rounded-lg shadow-2xl px-7 py-10 backdrop-blur-lg`}>
+            <div className={`max-w-[850px] w-full mx-auto rounded-lg shadow-2xl px-7 py-10 bg-[#c7c7c7]`}>
                 <div className='flex items-center justify-between gap-5'>
                     <div className='flex items-center gap-5'>
                         <button
@@ -34,14 +34,14 @@ export default function AttendanceTable() {
                     <button
                         onClick={() => setViewAttendanceTable(false)}
                     >
-                        <Close color={'#fff'} />
+                        <Close color={'#000'} />
                     </button>
                 </div>
 
                 {/*  */}
                 <div className='mt-[25px]'>
                     <p
-                        className='capitalize text-xl px-2 mb-3 text-white'
+                        className='capitalize text-xl px-2 mb-3 text-black'
                     >
                         {currentCourse?.courseTitle} {currentCourse?.courseCode} attendance list
                     </p>

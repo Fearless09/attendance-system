@@ -42,7 +42,7 @@ function Page() {
     }, [active])
     return (
         <AuthLayout text={'Sign Up'}>
-            <div className='mt-[25px] grid grid-cols-2 gap-2 rounded-lg bg-[#D8DADC]'>
+            <div className='mt-[25px] grid grid-cols-2 gap-2 rounded-lg bg-[#FFFFFF]'>
                 <button
                     className={`py-3 px-2 text-base font-medium rounded-lg ${active === 'students' && 'text-white bg-[#575757]'}`}
                     onClick={() => setActive('students')}

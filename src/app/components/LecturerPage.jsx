@@ -13,31 +13,31 @@ export default function LecturerPage() {
             <div className='w-[200px] aspect-square rounded-full bg-gradient-radial from-slate-300 to-slate-400 mx-auto flex justify-center items-end overflow-hidden '>
                 <User size={"170px"} color={"white"} />
             </div>
-            <h1 className='mt-10 font-medium text-3xl text-white'>
+            <h1 className='mt-10 font-medium text-3xl text-black'>
                 {currentUser?.prefix} {currentUser?.fullName}
             </h1>
-            <h2 className='uppercase mt-3 font-medium text-xl text-white'>
+            <h2 className='uppercase mt-3 font-medium text-xl text-black'>
                 {currentUser?.matricNumber}
             </h2>
 
             {currentCourse?.onGoing && (
-                <h3 className='mt-8 text-white text-xl capitalize flex gap-3 items-center justify-center'>
+                <h3 className='mt-8 text-black text-xl capitalize flex gap-3 items-center justify-center'>
                     <span className='inline-block w-[13px] aspect-square rounded-full bg-green-500 animate-ping '></span>
                     <span>On going class</span>
                 </h3>
             )}
             {currentCourse?.courseCode && (
-                <h2 className='mt-3 uppercase text-2xl text-white'>
+                <h2 className='mt-3 uppercase text-2xl text-black'>
                     {currentCourse?.courseCode}
                 </h2>
             )}
             {currentCourse?.courseTitle && (
-                <h2 className='mt-2 capitalize text-xl text-white'>
+                <h2 className='mt-2 capitalize text-xl text-black'>
                     {currentCourse?.courseTitle}
                 </h2>
             )}
             {currentCourse?.date && (
-                <h2 className='mt-2 capitalize text-xl text-white'>
+                <h2 className='mt-2 capitalize text-xl text-black'>
                     {currentCourse?.date}
                 </h2>
             )}
