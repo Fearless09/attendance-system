@@ -8,8 +8,8 @@ import Link from 'next/link'
 function AuthLayout({ children, text }) {
     const router = useRouter()
     return (
-        <div className={`p-3 sm:p-5 bg-[#1F313B] min-h-screen h-full flex items-center justify-center`}>
-            <div className={`max-w-[650px] w-full mx-auto rounded-lg shadow-lg p-5 bg-white/75`}>
+        <div className={`p-3 sm:p-5 bg-[url('/study-group-african-people.jpg')] bg-cover min-h-screen h-full flex items-center justify-center`}>
+            <div className={`max-w-[650px] w-full mx-auto rounded-lg shadow-lg p-5 bg-white/80`}>
                 <div className='flex items-center justify-between gap-5'>
                     <button
                         className='py-3 px-[15px] border border-[#D8DADC] rounded-[10px] hover:bg-[#D8DADC]'

@@ -16,8 +16,8 @@ export default function StudentLayout({ children }) {
     }, [])
 
     return (
-        <div className={`p-3 sm:p-5 bg-[#1F313B] min-h-screen h-full flex items-center justify-center`}>
-            <div className={`max-w-[650px] w-full mx-auto rounded-lg shadow-lg p-5 bg-white/75 relative`}>
+        <div className={`p-3 sm:p-5 bg-[url('/study-group-african-people.jpg')] bg-cover min-h-screen h-full flex items-center justify-center`}>
+            <div className={`max-w-[650px] w-full mx-auto rounded-lg shadow-lg p-5 bg-white/80 relative`}>
                 <div className='flex items-center justify-between gap-5'>
                     <button
                         className='px-3 py-2 border border-[#D8DADC] rounded-[10px] hover:bg-[#D8DADC] z-20'
